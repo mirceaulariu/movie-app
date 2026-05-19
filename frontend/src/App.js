@@ -191,7 +191,7 @@ function App() {
     setLoading(true);
     setIsTrending(true);
     try {
-      const response = await axios.get(`http://localhost:5000/api/trending?region=${targetRegion}`);
+      const response = await axios.get(`https://movie-app-jz13.onrender.com/api/trending?region=${targetRegion}`);
       setMovies(response.data);
     } catch (err) {
       console.error("Could not load trending movies", err);
@@ -312,7 +312,7 @@ function App() {
 
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/search?q=${searchQuery}&region=${activeRegion}`
+        `https://movie-app-jz13.onrender.com/api/search?q=${searchQuery}&region=${activeRegion}`
       );
       setMovies(response.data);
     } catch (err) {
