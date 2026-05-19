@@ -8,6 +8,8 @@
 # testing
 /coverage
 
+frontend/.env
+
 # production
 /build
 
