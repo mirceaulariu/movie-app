@@ -112,4 +112,6 @@ app.get('/api/search', async (req, res) => {
     }
 });
 
-app.listen(5000, () => console.log("Backend alive on 5000"));
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => console.log(`Backend alive on port ${PORT}`));
