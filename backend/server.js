@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -5,7 +6,7 @@ const app = express();
 
 app.use(cors());
 
-const TMDB_TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmZmM2NTY4YzJkMTYyNWY2YTA5OTA5MjI3OTY0OWEwNSIsIm5iZiI6MTc3NjI5MDMxOS43MTcsInN1YiI6IjY5ZTAwYTBmZGUxOWJjZjUyM2I0Y2M0YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Isbw5BE-10dgPn-990lIazJv2fd-gDQYd_aHXlfCCE8";
+const TMDB_TOKEN = `Bearer ${process.env.TMDB_TOKENN}`;
 
 // trending movies
 app.get('/api/trending', async (req, res) => {
