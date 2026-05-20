@@ -480,10 +480,10 @@ function App() {
         <div style={profileCardStyle}>
           <h2 style={{ color: '#4f46e5' }}>Account Information</h2>
           <div style={{ textAlign: 'left', marginTop: '20px' }}>
+            <p><strong>Full Name:</strong> {user.displayName || "Not Provided"}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>User ID:</strong> {user.uid}</p>
             <p><strong>Account Created:</strong> {user.metadata.creationTime}</p>
-            <p><strong>Subscription:</strong> Free Tier (Romania)</p>
           </div>
         </div>
       </div>
