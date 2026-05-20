@@ -4,7 +4,7 @@ StreamHop is a full-stack web application that allows users to track global tren
 
 ---
 
-## 🚀 Live Demo
+##  Live Demo
 
 https://streamhop.vercel.app/
 
