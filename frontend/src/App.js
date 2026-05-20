@@ -296,6 +296,31 @@ function App() {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "Are you absolutely sure you want to delete your account? This will permanently erase your profile and watchlist."
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const userDocRef = doc(db, "watchlists", user.uid);
+      await deleteDoc(userDocRef);
+
+      await user.delete();
+
+      alert("Your account has been successfully deleted.");
+    } catch (error) {
+      console.error("Error deleting account:", error);
+
+      if (error.code === 'auth/requires-recent-login') {
+        alert("For security reasons, please log out, log back in, and try deleting your account again immediately.");
+      } else {
+        alert("Failed to delete account: " + error.message);
+      }
+    }
+  };
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSearch();
@@ -483,6 +508,26 @@ function App() {
             <p><strong>Full Name:</strong> {user.displayName || "Not Provided"}</p>
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Account Created:</strong> {user.metadata.creationTime}</p>
+
+            <button
+              onClick={handleDeleteAccount}
+              style={{
+                marginTop: '20px',
+                width: '100%',
+                padding: '10px',
+                backgroundColor: '#dc2626',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#b91c1c'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#dc2626'}
+            >
+              Delete Account Permanently
+            </button>
           </div>
         </div>
       </div>
