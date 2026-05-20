@@ -482,7 +482,6 @@ function App() {
           <div style={{ textAlign: 'left', marginTop: '20px' }}>
             <p><strong>Full Name:</strong> {user.displayName || "Not Provided"}</p>
             <p><strong>Email:</strong> {user.email}</p>
-            <p><strong>User ID:</strong> {user.uid}</p>
             <p><strong>Account Created:</strong> {user.metadata.creationTime}</p>
           </div>
         </div>
