@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { auth } from './firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [fullName, setFullName] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [isRegistering, setIsRegistering] = useState(false);
     const [error, setError] = useState('');
     const [isHovered, setIsHovered] = useState(false);
@@ -14,7 +16,17 @@ const Login = () => {
         setError('');
         try {
             if (isRegistering) {
-                await createUserWithEmailAndPassword(auth, email, password);
+                // await createUserWithEmailAndPassword(auth, email, password);
+                if (password !== confirmPassword) {
+                    setError("Passwords do not match!");
+                    return;
+                }
+
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+                await updateProfile(userCredential.user, {
+                    displayName: fullName
+                });
             } else {
                 await signInWithEmailAndPassword(auth, email, password);
             }
@@ -34,6 +46,19 @@ const Login = () => {
                 </p>
 
                 <form onSubmit={handleAuth} style={formStyle}>
+                    {isRegistering && (
+                        <div style={inputGroup}>
+                            <label style={labelStyle}>Full Name</label>
+                            <input
+                                type="text"
+                                placeholder="Enter your full name"
+                                required
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                style={inputStyle}
+                            />
+                        </div>
+                    )}
                     <div style={inputGroup}>
                         <label style={labelStyle}>Email Address</label>
                         <input
@@ -55,6 +80,20 @@ const Login = () => {
                             style={inputStyle}
                         />
                     </div>
+
+                    {isRegistering && (
+                        <div style={inputGroup}>
+                            <label style={labelStyle}>Confirm Password</label>
+                            <input
+                                type="password"
+                                placeholder="Repeat your password"
+                                required
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                style={inputStyle}
+                            />
+                        </div>
+                    )}
 
                     {error && <div style={errorStyle}>{error}</div>}
 
