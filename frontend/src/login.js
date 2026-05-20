@@ -28,7 +28,7 @@ const Login = () => {
         <div style={containerStyle}>
             <div style={cardStyle}>
                 <div style={logoStyle}>🎬</div>
-                <h1 style={titleStyle}>Stream Finder</h1>
+                <h1 style={titleStyle}>StreamHop</h1>
                 <p style={subtitleStyle}>
                     {isRegistering ? 'Create your account' : 'Sign in to your account'}
                 </p>
