@@ -778,6 +778,7 @@ function App() {
             maxWidth: '500px'
           }}>
             <input
+              value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="What do you want to watch?"
