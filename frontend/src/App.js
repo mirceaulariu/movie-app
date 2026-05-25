@@ -5,7 +5,7 @@ import { auth } from './firebase';
 import Login from './login';
 import AccountMenu from './accountMenu';
 import { db } from './firebase';
-import { doc, deleteDoc, query, where, onSnapshot, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, deleteDoc, query, where, onSnapshot, collection, addDoc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 
 const COUNTRIES = [
@@ -171,6 +171,46 @@ function App() {
     });
     return () => unsubscribe();
   }, []);
+
+
+  useEffect(() => {
+    if (!showNotifications || userNotifications.length === 0) return;
+
+    const checkLiveTrackingStatus = async () => {
+      const pendingItems = userNotifications.filter(n => n.status === 'pending');
+
+      for (let notifItem of pendingItems) {
+        try {
+          // Fetch from your live Render API deployment
+          const response = await axios.get(
+            `https://movie-app-jz13.onrender.com/api/trending?region=${region}`
+          );
+
+          // Look for this movie inside the data array
+          const freshDataMatch = response.data.find(m => m.id === notifItem.movieId);
+
+          if (freshDataMatch && freshDataMatch.platforms && freshDataMatch.platforms.length > 0) {
+            // Check if any of the new platforms match what the user checked off
+            const matchedPlatforms = freshDataMatch.platforms.filter(p =>
+              notifItem.platforms.some(tracked => tracked.toLowerCase() === p.toLowerCase())
+            );
+
+            // If a match is found, permanently move them to 'available' status!
+            if (matchedPlatforms.length > 0) {
+              const docRef = doc(db, "notifications", notifItem.id);
+              await updateDoc(docRef, {
+                status: 'available'
+              });
+            }
+          }
+        } catch (err) {
+          console.error(`Dynamic status evaluation failed for ${notifItem.movieTitle}:`, err);
+        }
+      }
+    };
+
+    checkLiveTrackingStatus();
+  }, [showNotifications, userNotifications, region]);
 
 
   // //trending movies on start
