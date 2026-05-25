@@ -736,7 +736,22 @@ function App() {
         textAlign: 'center',
         padding: '0 20px'
       }}>
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '10px', color: '#1a1a1a', fontWeight: '800', letterSpacing: '-1px' }}>
+        <h1
+          onClick={() => {
+            setShowNotifications(false);
+            setShowProfile(false);
+            setSelectedMovie(null);
+          }}
+          style={{
+            fontSize: '3.5rem',
+            marginBottom: '10px',
+            color: '#1a1a1a',
+            fontWeight: '800',
+            letterSpacing: '-1px',
+            cursor: 'pointer',
+            userSelect: 'none'
+          }}
+        >
           🎬 StreamHop
         </h1>
         <p style={{ fontSize: '1.2rem', marginBottom: '30px', color: '#4a4a4a', maxWidth: '600px', opacity: 0.9 }}>
