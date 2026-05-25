@@ -741,6 +741,11 @@ function App() {
             setShowNotifications(false);
             setShowProfile(false);
             setSelectedMovie(null);
+
+            setSearchQuery('');
+            setIsTrending(true);
+
+            fetchTrendingMovies(region);
           }}
           style={{
             fontSize: '3.5rem',
