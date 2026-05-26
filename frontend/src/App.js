@@ -238,6 +238,10 @@ function App() {
   // }, []);
 
 
+  useEffect(() => {
+    setSelectedGenre('');
+  }, []);
+
   const fetchTrendingMovies = async (targetRegion, targetGenre) => {
     setLoading(true);
     setIsTrending(true);
@@ -252,6 +256,11 @@ function App() {
   };
 
   useEffect(() => {
+    const savedGenre = sessionStorage.getItem('selectedGenre');
+    if (savedGenre && savedGenre !== selectedGenre) {
+      setSelectedGenre(savedGenre);
+    }
+
     if (!searchQuery.trim()) {
       fetchTrendingMovies(region, selectedGenre);
     }
@@ -835,6 +844,7 @@ function App() {
               fontSize: '1rem'
             }}
           >
+            {/* <option value="">All Genres 🎬</option> */}
             {GENRES.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
           </select>
 
