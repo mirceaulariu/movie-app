@@ -11,7 +11,7 @@ const TMDB_TOKEN = `Bearer ${process.env.TMDB_TOKENN}`;
 // trending movies
 app.get('/api/trending', async (req, res) => {
     const region = req.query.region || 'RO'; // set landing to RO
-    const genre = req.query.genre;
+    const genre = req.query.genre || '';
 
     try {
 
