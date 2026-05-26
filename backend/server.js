@@ -11,11 +11,11 @@ const TMDB_TOKEN = `Bearer ${process.env.TMDB_TOKENN}`;
 // trending movies
 app.get('/api/trending', async (req, res) => {
     const region = req.query.region || 'RO'; // set landing to RO
-    const genre = req.query.genre || '';
+    const genre = req.query.genre;
 
     try {
 
-        if (genre && genre != '') {
+        if (genre) {
             url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&watch_region=${region}&with_genres=${genre}&language=en-US`;
         }
         else {
