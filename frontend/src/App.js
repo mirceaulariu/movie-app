@@ -137,6 +137,10 @@ function App() {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
+    setSelectedGenre('');
+  }, []);
+
+  useEffect(() => {
     if (!user) return;
 
     const q = query(
@@ -237,10 +241,6 @@ function App() {
   //   fetchTrending();
   // }, []);
 
-
-  useEffect(() => {
-    setSelectedGenre('');
-  }, []);
 
   const fetchTrendingMovies = async (targetRegion, targetGenre) => {
     setLoading(true);
