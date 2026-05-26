@@ -136,9 +136,6 @@ function App() {
   const [isTrending, setIsTrending] = useState(true);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
-  useEffect(() => {
-    setSelectedGenre('');
-  }, []);
 
   useEffect(() => {
     if (!user) return;
@@ -256,9 +253,9 @@ function App() {
   };
 
   useEffect(() => {
-    const savedGenre = sessionStorage.getItem('selectedGenre');
-    if (savedGenre && savedGenre !== selectedGenre) {
-      setSelectedGenre(savedGenre);
+    if (selectedGenre === undefined) {
+      setSelectedGenre('');
+      return;
     }
 
     if (!searchQuery.trim()) {
