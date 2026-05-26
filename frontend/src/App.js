@@ -238,11 +238,11 @@ function App() {
   // }, []);
 
 
-  const fetchTrendingMovies = async (targetRegion) => {
+  const fetchTrendingMovies = async (targetRegion, targetGenre) => {
     setLoading(true);
     setIsTrending(true);
     try {
-      const response = await axios.get(`https://movie-app-jz13.onrender.com/api/trending?region=${targetRegion}`);
+      const response = await axios.get(`https://movie-app-jz13.onrender.com/api/trending?region=${targetRegion}&genre=${targetGenre || ''}`);
       setMovies(response.data);
     } catch (err) {
       console.error("Could not load trending movies", err);
@@ -253,13 +253,13 @@ function App() {
 
   useEffect(() => {
     if (!searchQuery.trim()) {
-      fetchTrendingMovies(region);
+      fetchTrendingMovies(region, selectedGenre);
     }
     else {
       handleSearch(region);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [region]);
+  }, [region, selectedGenre]);
 
 
   const handleAddToWatched = async (movie) => {
