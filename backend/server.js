@@ -14,15 +14,13 @@ app.get('/api/trending', async (req, res) => {
     const genre = req.query.genre;
 
     try {
-
-        if (genre) {
+        const url = region
+            ? 'https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&region=${region}&language=en-US'
+            : 'https://api.themoviedb.org/3/trending/movie/day?api_key=YOUR_KEY';
+        if (genre && genre != '') {
             url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&watch_region=${region}&with_genres=${genre}&language=en-US`;
         }
-        else {
-            const url = region
-                ? 'https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&region=${region}&language=en-US'
-                : 'https://api.themoviedb.org/3/trending/movie/day?api_key=YOUR_KEY';
-        }
+
 
 
         const response = await axios.get(
