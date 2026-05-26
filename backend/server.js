@@ -14,11 +14,13 @@ app.get('/api/trending', async (req, res) => {
     const genre = req.query.genre;
 
     try {
-        const url = region
-            ? 'https://api.themoviedb.org/3/movie/popular?api_key=YOUR_KEY&region=${region}&language=en-US'
-            : 'https://api.themoviedb.org/3/trending/movie/day?api_key=YOUR_KEY';
-        if (genre && genre != '') {
+        let url;
+        if (genre && genre !== '') {
             url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&watch_region=${region}&with_genres=${genre}&language=en-US`;
+        } else {
+            url = region
+                ? `https://api.themoviedb.org/3/movie/popular?region=${region}&language=en-US`
+                : 'https://api.themoviedb.org/3/trending/movie/day';
         }
 
 
@@ -62,13 +64,13 @@ app.get('/api/trending', async (req, res) => {
 
         let finalMovies = detailedMovies.filter(m => m !== null);
 
-        if (genre) {
+        if (genre && genre != '') {
             finalMovies = finalMovies.filter(movie =>
                 movie.genre_ids && movie.genre_ids.includes(Number(genre))
             );
         }
 
-        res.json(detailedMovies.filter(m => m !== null));
+        res.json(finalMovies);
     } catch (error) {
         res.status(500).json({ error: "Failed to fetch regional trending content" });
     }
