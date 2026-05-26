@@ -827,22 +827,25 @@ function App() {
           </div>
 
           {/* genre selector */}
-          <select
-            value={selectedGenre}
-            onChange={(e) => setSelectedGenre(e.target.value)}
-            style={{
-              padding: '14px 20px',
-              borderRadius: '40px',
-              border: '1px solid #ddd',
-              backgroundColor: '#fff',
-              color: '#333',
-              cursor: 'pointer',
-              outline: 'none',
-              fontSize: '1rem'
-            }}
-          >
-            {GENRES.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
-          </select>
+          {!searchQuery.trim() && (
+            <select
+              value={selectedGenre}
+              onChange={(e) => setSelectedGenre(e.target.value)}
+              style={{
+                padding: '14px 20px',
+                borderRadius: '40px',
+                border: '1px solid #ddd',
+                backgroundColor: '#fff',
+                color: '#333',
+                cursor: 'pointer',
+                outline: 'none',
+                fontSize: '1rem'
+              }}
+            >
+              {GENRES.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
+            </select>
+          )}
+
 
           {/* region selector */}
           <select
