@@ -844,7 +844,6 @@ function App() {
               fontSize: '1rem'
             }}
           >
-            <option value="">All Genres 🎬</option>
             {GENRES.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
           </select>
 
