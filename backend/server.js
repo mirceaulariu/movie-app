@@ -11,6 +11,7 @@ const TMDB_TOKEN = `Bearer ${process.env.TMDB_TOKENN}`;
 // trending movies
 app.get('/api/trending', async (req, res) => {
     const region = req.query.region || 'RO'; // set landing to RO
+    const genre = req.query.genre;
 
     try {
 
@@ -45,6 +46,7 @@ app.get('/api/trending', async (req, res) => {
                     overview: movie.overview,
                     rating: movie.vote_average,
                     release_date: movie.release_date,
+                    genre_ids: movie.genre_ids,
                     poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null,
                     platforms: streamingOn,
                     watch_link: hubLink
@@ -53,6 +55,14 @@ app.get('/api/trending', async (req, res) => {
                 return null;
             }
         }));
+
+        let finalMovies = detailedMovies.filter(m => m !== null);
+
+        if (genre) {
+            finalMovies = finalMovies.filter(movie =>
+                movie.genre_ids && movie.genre_ids.includes(Number(genre))
+            );
+        }
 
         res.json(detailedMovies.filter(m => m !== null));
     } catch (error) {

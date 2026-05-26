@@ -16,6 +16,16 @@ const COUNTRIES = [
 ];
 
 
+const GENRES = [
+  { id: '', name: 'All Genres 🎬' },
+  { id: '28', name: 'Action 💥' },
+  { id: '35', name: 'Comedy 😂' },
+  { id: '18', name: 'Drama 🎭' },
+  { id: '27', name: 'Horror 👻' },
+  { id: '878', name: 'Sci-Fi 🚀' },
+  { id: '53', name: 'Thriller 🤫' }
+];
+
 const watchedIconButtonStyle = {
   position: 'absolute', top: '10px', right: '10px', backgroundColor: 'white',
   border: 'none', borderRadius: '50%', width: '32px', height: '32px',
@@ -110,6 +120,7 @@ const alertBoxStyle = {
 };
 
 function App() {
+  const [selectedGenre, setSelectedGenre] = useState('');
   const [hoveredCard, setHoveredCard] = useState(null);
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -808,6 +819,24 @@ function App() {
               {loading ? '...' : 'SEARCH'}
             </button>
           </div>
+
+          {/* genre selector */}
+          <select
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+            style={{
+              padding: '14px 20px',
+              borderRadius: '40px',
+              border: '1px solid #ddd',
+              backgroundColor: '#fff',
+              color: '#333',
+              cursor: 'pointer',
+              outline: 'none',
+              fontSize: '1rem'
+            }}
+          >
+            {GENRES.map(g => <option key={g.id} value={g.id}>{g.name}</option>)}
+          </select>
 
           {/* region selector */}
           <select
