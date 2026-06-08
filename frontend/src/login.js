@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { auth } from './firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, googleProvider } from './firebase';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,6 +10,18 @@ const Login = () => {
     const [isRegistering, setIsRegistering] = useState(false);
     const [error, setError] = useState('');
     const [isHovered, setIsHovered] = useState(false);
+    const [isGoogleHovered, setIsGoogleHovered] = useState(false);
+
+    const handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            console.log("Successfully logged in as:", user.displayName);
+        } catch (error) {
+            console.error("Google authentication failed:", error.message);
+        }
+    };
+
 
     const handleAuth = async (e) => {
         e.preventDefault();
@@ -110,6 +122,44 @@ const Login = () => {
                         {isRegistering ? 'Create Account' : 'Sign In'}
                     </button>
                 </form>
+
+
+                <div style={{ display: 'flex', alignItems: 'center', width: '100%', margin: '20px 0', color: '#9ca3af', fontSize: '0.85rem', fontWeight: '600' }}>
+                    <div style={{ flex: 1, height: '1px', backgroundColor: '#e5e7eb' }}></div>
+                    <span style={{ padding: '0 12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or</span>
+                    <div style={{ flex: 1, height: '1px', backgroundColor: '#e5e7eb' }}></div>
+                </div>
+
+                <button
+                    onClick={handleGoogleLogin}
+                    onMouseEnter={() => setIsGoogleHovered(true)}
+                    onMouseLeave={() => setIsGoogleHovered(false)}
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '12px',
+                        width: '100%',
+                        padding: '12px 16px',
+                        borderRadius: '12px',
+                        border: '1px solid #d1d5db',
+                        backgroundColor: isGoogleHovered ? '#f9fafb' : '#ffffff',
+                        color: '#374151',
+                        fontWeight: '600',
+                        fontSize: '0.95rem',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxSizing: 'border-box'
+                    }}
+                >
+                    <svg width="18" height="18" viewBox="0 0 18 18" style={{ display: 'block' }}>
+                        <path fill="#4285F4" d="M17.64 9.2c0-.63-.06-1.25-.16-1.84H9v3.47h4.84c-.21 1.12-.84 2.07-1.79 2.7l2.8 2.17c1.63-1.51 2.57-3.74 2.57-6.5z" />
+                        <path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.8-2.17c-.78.52-1.78.83-3.16.83-2.43 0-4.49-1.64-5.22-3.85H.97v2.24A9 9 0 0 0 9 18z" />
+                        <path fill="#FBBC05" d="M3.78 10.63c-.19-.57-.3-1.18-.3-1.81s.11-1.24.3-1.81V4.77H.97A9 9 0 0 0 0 9c0 1.54.39 3.01 1.07 4.3l2.71-2.67z" />
+                        <path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35L15 2.3C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.97 4.77l2.81 2.18c.73-2.21 2.79-3.85 5.22-3.85z" />
+                    </svg>
+                    Continue with Google
+                </button>
 
                 <div style={footerStyle}>
                     {isRegistering ? 'Already have an account?' : 'Don’t have an account yet?'}
