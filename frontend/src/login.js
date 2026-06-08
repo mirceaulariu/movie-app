@@ -179,14 +179,16 @@ const containerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
+    minHeight: '100vh',
     width: '100vw',
     background: 'radial-gradient(circle at top left, #4f46e5 0%, #1e1b4b 100%)',
+    backgroundAttachment: 'fixed',
+    backgroundAttachment: 'fixed',
     fontFamily: "'Inter', sans-serif",
 };
 
 const cardStyle = {
-    padding: '48px 40px',
+    padding: '40px 40px',
     backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: '24px',
     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
@@ -194,6 +196,7 @@ const cardStyle = {
     maxWidth: '400px',
     textAlign: 'center',
     backdropFilter: 'blur(10px)',
+    margin: 'auto'
 };
 
 const logoStyle = {
