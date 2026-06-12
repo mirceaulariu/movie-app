@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { auth, googleProvider } from './firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider, linkWithCredential, EmailAuthProvider } from "firebase/auth";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -17,8 +17,36 @@ const Login = () => {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             console.log("Successfully logged in as:", user.displayName);
-        } catch (error) {
-            console.error("Google authentication failed:", error.message);
+        } catch (err) {
+            if (err.code === 'auth/account-exists-with-different-credential') {
+                const pendingCredential = GoogleAuthProvider.credentialFromError(err);
+                const conflictingEmail = err.customData.email;
+
+                const existingPassword = prompt(
+                    `An account with the email ${conflictingEmail} already exists via password registration. ` +
+                    `Please enter your password to safely link your Google identity to your original profile data:`
+                );
+
+                if (!existingPassword) {
+                    setError("Account linking canceled by user.");
+                    return;
+                }
+
+                try {
+                    const traditionalUserCredential = await signInWithEmailAndPassword(auth, conflictingEmail, existingPassword);
+                    
+                    await linkWithCredential(traditionalUserCredential.user, pendingCredential);
+                    
+                    console.log("Accounts successfully joined! Your data remains bound to UID:", traditionalUserCredential.user.uid);
+                    alert("Google identity successfully connected to your existing profile.");
+                } catch (linkError) {
+                    console.error("Linking pipeline failed:", linkError.message);
+                    setError(linkError.code === 'auth/invalid-credential' ? "Incorrect password. Linking failed." : linkError.message);
+                }
+            } else {
+                console.error("Google authentication failed:", err.message);
+                setError(err.message);
+            }
         }
     };
 
