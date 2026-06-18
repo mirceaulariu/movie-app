@@ -193,21 +193,21 @@ function App() {
 
       for (let notifItem of pendingItems) {
         try {
-          // Fetch from your live Render API deployment
+          // fetch from the live Render API deployment
           const response = await axios.get(
             `https://movie-app-jz13.onrender.com/api/trending?region=${region}`
           );
 
-          // Look for this movie inside the data array
+          // check for the movie inside the array
           const freshDataMatch = response.data.find(m => m.id === notifItem.movieId);
 
           if (freshDataMatch && freshDataMatch.platforms && freshDataMatch.platforms.length > 0) {
-            // Check if any of the new platforms match what the user checked off
+            // check for platforms matching
             const matchedPlatforms = freshDataMatch.platforms.filter(p =>
               notifItem.platforms.some(tracked => tracked.toLowerCase() === p.toLowerCase())
             );
 
-            // If a match is found, permanently move them to 'available' status!
+            // change status to available if needed
             if (matchedPlatforms.length > 0) {
               const docRef = doc(db, "notifications", notifItem.id);
               await updateDoc(docRef, {
