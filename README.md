@@ -1,6 +1,6 @@
 # StreamHop 🎬
 
-StreamHop is a full-stack web application that allows users to track global trending movies or search for their favorites, while discovering where those titles are available to stream locally based on their selected region. 
+StreamHop is a full stack web app which allows users to get up-to-date information regarding global trends and favorite movies, at the same time giving them access to find out how they can stream their favorite films in their region.
 
 ---
 
@@ -12,10 +12,11 @@ https://streamhop.vercel.app/
 
 ## ✨ Features
 
-* ** Global Trends, Local Lens:** Displays the universal top trending movies daily, while dynamically swapping streaming provider availability based on the user's selected country.
-* ** Global Movie Search:** Real-time search engine tapping into a massive global movie database.
-* ** Interactive Watch Hub Buttons:** Deep-links streaming platform badges directly to the movie's specific watch hub destination.
-* ** User Authentication & Favorites:** Built-in secure user system allowing movie enthusiasts to save target titles directly to a cloud-hosted watchlist.
+
+* **Global Trends, Local Perspective:** Showcases the global top trending movies of the day, automatically changing streaming provider according to the selected country by the user.
+* **Global Movie Search Engine:** Real-time global movie search engine which has huge data of movies stored in it.
+* **Interactive Watch Hub Buttons:** Streamlined links embedded in streaming platform logos leading to their respective watch hub pages.
+* **User Authentication & Favorites:** Integrated authentication system which enables movie lovers to add their favorite movies on a cloud-based watchlist.
 
 ---
 

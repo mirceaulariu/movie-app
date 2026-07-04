@@ -225,20 +225,6 @@ function App() {
   }, [showNotifications, userNotifications, region]);
 
 
-  // //trending movies on start
-  // useEffect(() => {
-  //   const fetchTrending = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:5000/api/trending');
-  //       setMovies(response.data);
-  //     } catch (err) {
-  //       console.error("Could not load trending movies");
-  //     }
-  //   };
-  //   fetchTrending();
-  // }, []);
-
-
   const fetchTrendingMovies = async (targetRegion, targetGenre) => {
     setLoading(true);
     setIsTrending(true);
@@ -487,48 +473,6 @@ function App() {
         />
 
         <button onClick={() => setShowProfile(false)} style={backButtonStyle}>← Back to Home</button>
-        {/* {hasNotifications && (
-          <div style={alertBoxStyle}>
-            <h3 style={{ margin: '0 0 10px 0', fontSize: '1rem' }}>🎉 Good News!</h3>
-            {availableMovies.map(movie => (
-              <p key={movie.id} style={{ margin: '5px 0', fontSize: '0.9rem' }}>
-                <strong>{movie.movieTitle}</strong> is now available on your selected platforms!
-              </p>
-            ))}
-          </div>
-        )}
-        <div style={profileCardStyle}>
-          <h2 style={{ color: '#4f46e5', marginBottom: '25px' }}>🔔 My Tracking Center</h2>
-
-          {userNotifications.length === 0 ? (
-            <p style={{ color: '#999', fontStyle: 'italic' }}>You aren't tracking any movies yet.</p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-              {userNotifications.map((notif) => (
-                <div key={notif.id} style={notifCardStyle}>
-                  <div style={{ textAlign: 'left', flex: 1 }}>
-                    <h4 style={{ margin: '0 0 5px 0' }}>{notif.movieTitle}</h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: '#666' }}>
-                      Watching: {notif.platforms.join(', ')}
-                    </p>
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                    <div style={statusBadgeStyle(notif.status)}>
-                      {notif.status === 'pending' ? '⏳ Monitoring' : '✅ Available!'}
-                    </div>
-                    <button
-                      onClick={() => handleDeleteNotification(notif.id)}
-                      style={deleteButtonStyle}
-                      title="Stop tracking"
-                    >
-                      🗑️
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div> */}
 
         <div style={profileCardStyle}>
           <h3 style={{ borderBottom: '2px solid #4f46e5', display: 'inline-block', paddingBottom: '5px' }}>
@@ -655,11 +599,6 @@ function App() {
                     style={{ textDecoration: 'none' }}
                   >
                     <span
-                      // key={i} style={{
-                      //   backgroundColor: '#eef2ff', color: '#4f46e5', padding: '10px 20px',
-                      //   borderRadius: '10px', fontWeight: 'bold', border: '1px solid #e0e7ff'
-                      // }}
-
                       style={{
                         backgroundColor: '#4f46e5',
                         color: 'white',
