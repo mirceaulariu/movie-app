@@ -195,7 +195,7 @@ function App() {
         try {
           // fetch from the live Render API deployment
           const response = await axios.get(
-            `https://movie-app-jz13.onrender.com/api/trending?region=${region}`
+            `https://movie-app-jz13.onrender.com/api/movie/${notifItem.movieId}?region=${region}`
           );
 
           // check for the movie inside the array
